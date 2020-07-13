@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  unifi_dnsmasq:
+    image: computerkoenig/unifi_dnsmasq:latest
+    # build: .
+    container_name: unifi-dnsmasq
+    stdin_open: true # docker run -i
+    # tty: true
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - target: 53
+        published: 53
+        protocol: tcp
+      - target: 53
+        published: 53
+        protocol: udp
+    volumes:
+      #  # Hosts-files directory
+      - "./dnsmasq.hosts:/etc/dnsmasq.hosts"
+      #  # Additional config-files directory
+      - "./dnsmasq.d:/etc/dnsmasq.d"
+    environment:
+      # Commented out = default values
+      - "UNIFI_BASEURL=https://192.168.1.1:8443"
+      - "UNIFI_USERNAME=ubnt"
+      - "UNIFI_PASSWORD=ubnt"
+      - "UNIFI_SITE=default"
+      # - "FIXED_ONLY=FALSE"
+      # - "UNIFI_POLL_INTERVAL=60"
+      # - "DNSMASQ_OPTS="
+      # Tip: use this to get rid of https-warnings in the logs
+      - "PYTHONWARNINGS=ignore:Unverified HTTPS request"

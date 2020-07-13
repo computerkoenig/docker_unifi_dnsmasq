@@ -1,0 +1,5 @@
+__pycache__
+/docker-compose.yml
+/dnsmasq.d
+/dnsmasq.hosts
+/build_push_unifi_dnsmasq.sh
